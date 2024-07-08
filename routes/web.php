@@ -16,8 +16,12 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/', [NotesController::class, 'index'])->middleware(['auth', 'verified'])->name('mainPage');
+
 Route::get('/create', [NotesController::class, 'create'])->middleware(['auth', 'verified'])->name('createPage');
 Route::post('/create', [NotesController::class, 'store'])->middleware(['auth', 'verified'])->name('createPageStore');
+
+Route::get('/update/{id}', [NotesController::class, 'update'])->middleware(['auth', 'verified'])->name('updatePage');
+Route::put('/update/{id}', [NotesController::class, 'updateStore'])->middleware(['auth', 'verified'])->name('updatePageStore');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
