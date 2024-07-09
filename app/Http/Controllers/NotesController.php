@@ -31,13 +31,13 @@ class NotesController extends Controller
         return Inertia::render('Edit');//TODO find proper 404 page
     }
 
-    public function updateStore(Request $request): void
+    public function updateStore(string $id, Request $request): void
     {
-        $request->validate(['id'=>'required',
+        $request->validate([
             'title'=>'required|min:1|max:50',
             'body'=>'required|min:1|max:500',]);
 
-        $model = Note::find(request('id'));
+        $model = Note::find($id);
 
         if ($model != null && $model->user_id == Auth::id()) {
             $model->title = request('title');
@@ -54,7 +54,17 @@ class NotesController extends Controller
         Note::create([
             'user_id' => Auth::id(),
             'title' => $request->title,
-            'description' => $request->body
+            'body' => $request->body
         ]);
+    }
+
+    public function delete(string $id): void
+    {
+        //dd('hi');
+        $note = Note::find($id);
+        //dd($id);
+        if ($note != null && $note->user_id == Auth::id()) {
+            $note->delete();
+        }
     }
 }

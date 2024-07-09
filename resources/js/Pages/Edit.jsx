@@ -10,7 +10,7 @@ import SecondaryButton from "@/Components/SecondaryButton.jsx";
 export default function Edit({auth, note}) {
     const [values, setValues] = useState({ // Form fields
         title: note.title,
-        body: note.description
+        body: note.body
     });
 
     // We will use function below to get

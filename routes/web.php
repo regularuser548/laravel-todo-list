@@ -23,6 +23,8 @@ Route::post('/create', [NotesController::class, 'store'])->middleware(['auth', '
 Route::get('/update/{id}', [NotesController::class, 'update'])->middleware(['auth', 'verified'])->name('updatePage');
 Route::put('/update/{id}', [NotesController::class, 'updateStore'])->middleware(['auth', 'verified'])->name('updatePageStore');
 
+Route::delete('/delete/{id}', [NotesController::class, 'delete'])->middleware(['auth', 'verified'])->name('delete');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
