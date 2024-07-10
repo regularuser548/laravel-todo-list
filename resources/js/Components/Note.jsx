@@ -1,5 +1,4 @@
 import SecondaryButton from "@/Components/SecondaryButton.jsx";
-import {router} from "@inertiajs/react";
 import TextInput from "@/Components/TextInput.jsx";
 import {useState} from "react";
 import TextArea from "@/Components/TextArea.jsx";
@@ -14,16 +13,7 @@ export default function Note(props){
     const [body, setBody] = useState(props.body);
     const [oldBody, setOldBody] = useState('');
 
-    function deleteNote(){
-        //router.delete(`/delete/${props.id}`, {preserveScroll: true, preserveState: true});
 
-        axios.delete(`/delete/${props.id}`)
-            .then(function (response) {
-            //delete note
-        }).catch(function (error) {
-            console.log(error);
-        });
-    }
 
     function Save(){
         setEditMode(false);
@@ -39,6 +29,7 @@ export default function Note(props){
             });
 
         //TODO change update date
+
     }
 
     function Cancel(){
@@ -72,7 +63,7 @@ export default function Note(props){
                     :
                     <div className="float-right">
                         <SecondaryButton className="me-2" type="button" onClick={EnableEditMode}>Edit</SecondaryButton>
-                        <SecondaryButton type="button" onClick={() => deleteNote()}>Delete</SecondaryButton>
+                        <SecondaryButton type="button" onClick={() => props.on_delete(props.id)}>Delete</SecondaryButton>
                     </div>
                 }
 
