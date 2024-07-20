@@ -7,47 +7,39 @@ export default function Note(props){
 
     const [isEditMode, setEditMode] = useState(false);
 
-    const [title, setTitle] = useState(props.title);
-    const [oldTitle, setOldTitle] = useState('');
-
-    const [body, setBody] = useState(props.body);
-    const [oldBody, setOldBody] = useState('');
-
-
+    const [newValues, setNewValues] = useState({
+        title: props.title,
+        body: props.body
+    });
 
     function Save(){
         setEditMode(false);
-
-        setOldTitle('');
-        setOldBody('');
-
-        axios.put(`/update/${props.id}`, {
-            title: title,
-            body: body
-        }).catch(function (error) {
-                console.log(error);
-            });
-
-        //TODO change update date
+        props.on_edit(props.id, newValues.title, newValues.body);
 
     }
 
     function Cancel(){
         setEditMode(false);
 
-        setTitle(oldTitle);
-        setBody(oldBody);
-
-        setOldTitle('');
-        setOldBody('');
+        const title = props.title;
+        const body = props.body;
+        setNewValues({
+            title,
+            body
+        })
     }
 
     function EnableEditMode(){
         setEditMode(true);
+    }
 
-        setOldTitle(title);
-        setOldBody(body);
-
+    function handleTextChange(e) {
+        const key = e.target.id;
+        const value = e.target.value
+        setNewValues(values => ({
+            ...values,
+            [key]: value,
+        }))
     }
 
     return (
@@ -67,10 +59,13 @@ export default function Note(props){
                     </div>
                 }
 
-                <p className="font-bold">{isEditMode ? <TextInput className="font-bold" id="title" value={title}
-                                                                  onChange={(e) => setTitle(e.target.value)}></TextInput> : title}</p>
+                <p className="font-bold">{isEditMode ? <TextInput className="font-bold" id="title" value={newValues.title}
+                                                                  onChange={handleTextChange}></TextInput> : props.title}
+                </p>
                 <p className="font-bold">{isEditMode ?
-                    <TextArea className="font-bold" id="body" value={body} onChange={(e) => setBody(e.target.value)}></TextArea> : body}</p>
+                    <TextArea className="font-bold" id="body" value={newValues.body} onChange={handleTextChange}>
+                    </TextArea> : props.body}
+                </p>
 
                 <div className="pt-2 text-gray-400 text-sm">
                     <span>{"Created: " + new Date(props.created_at).toLocaleDateString() + " "}</span>

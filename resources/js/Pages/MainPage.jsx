@@ -16,6 +16,26 @@ export default function MainPage({ auth, notes }) {
         });
     }
 
+    function editNote(id, title, body){
+        axios.put(`/update/${id}`, {
+            title: title,
+            body: body
+        }).then(function (response) {
+            setNotesList(notesList.map(note => {
+               if (note.id === id) {
+                   note.title = title;
+                   note.body = body;
+                   note.updated_at = new Date().toLocaleDateString();
+                   return note;
+               }
+               else
+                   return note;
+            }));
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
     return (
         <>
             <AuthenticatedLayout user={auth.user}>
@@ -28,6 +48,7 @@ export default function MainPage({ auth, notes }) {
                           created_at={item.created_at}
                           updated_at={item.updated_at}
                           on_delete={deleteNote}
+                          on_edit={editNote}
                     ></Note>
                 )) }
 
