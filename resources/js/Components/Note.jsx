@@ -59,7 +59,7 @@ export default function Note(props){
                     </div>
                 }
 
-                <p className="font-bold">{isEditMode ? <TextInput className="font-bold" id="title" value={newValues.title}
+                <p className="font-bold">{isEditMode ? <TextInput className="font-bold mb-2" id="title" value={newValues.title}
                                                                   onChange={handleTextChange}></TextInput> : props.title}
                 </p>
                 <p className="font-bold">{isEditMode ?

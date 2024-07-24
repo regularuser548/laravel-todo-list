@@ -15,23 +15,7 @@ class NotesController extends Controller
         return Inertia::render('MainPage', ['notes' => Note::all()->where("user_id", Auth::id())]);
     }
 
-    public function create()
-    {
-        return Inertia::render('Create');
-    }
-
-    public function update(string $id)
-    {
-        $model = Note::find(request('id'));
-
-        if ($model != null && $model->user_id == Auth::id()) {
-            return Inertia::render('Edit', ['note' => $model]);
-        }
-
-        return Inertia::render('Edit');//TODO find proper 404 page
-    }
-
-    public function updateStore(string $id, Request $request): void
+    public function update(string $id, Request $request): void
     {
         $request->validate([
             'title'=>'required|min:1|max:50',
@@ -47,22 +31,25 @@ class NotesController extends Controller
 
     }
 
-    public function store(Request $request): void
+    public function store(Request $request): string|false
     {
-        $request->validate(['title'=>'required|min:1|max:50',
-                            'body'=>'required|min:1|max:500',]);
-        Note::create([
+        $request->validate([
+            'title'=>'max:50',
+            'body'=>'max:500',]);
+
+        $note = Note::create([
             'user_id' => Auth::id(),
             'title' => $request->title,
-            'body' => $request->body
+            'body' => $request->body,
         ]);
+
+        return json_encode(['id' =>$note->id, 'created_at' => $note->created_at, 'updated_at' => $note->updated_at]);
     }
 
-    public function delete(string $id): void
+    public function destroy(string $id): void
     {
-        //dd('hi');
         $note = Note::find($id);
-        //dd($id);
+
         if ($note != null && $note->user_id == Auth::id()) {
             $note->delete();
         }
