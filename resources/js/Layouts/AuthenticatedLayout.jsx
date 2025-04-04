@@ -31,11 +31,11 @@ export default function Authenticated({ user, header, children }) {
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
-                            </div>
+                            {/*<div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">*/}
+                            {/*    <NavLink href={route('dashboard')} active={route().current('dashboard')}>*/}
+                            {/*        Dashboard*/}
+                            {/*    </NavLink>*/}
+                            {/*</div>*/}
 
                             <div className="ms-3 relative">
                                 <Dropdown>
@@ -100,11 +100,11 @@ export default function Authenticated({ user, header, children }) {
                 </div>
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                        Dashboard
-                        </ResponsiveNavLink>
-                    </div>
+                    {/*<div className="pt-2 pb-3 space-y-1">*/}
+                    {/*    <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>*/}
+                    {/*    Dashboard*/}
+                    {/*    </ResponsiveNavLink>*/}
+                    {/*</div>*/}
 
                     <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
                         <div className="px-4">

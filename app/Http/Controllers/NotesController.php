@@ -6,13 +6,17 @@ use App\Models\Note;
 
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Inertia\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 class NotesController extends Controller
 {
-    public function index(){
+    public function index(): Response
+    {
+        $notes = Note::all()->where("user_id", Auth::id())->flatten();
 
-        return Inertia::render('MainPage', ['notes' => Note::all()->where("user_id", Auth::id())]);
+        return Inertia::render('MainPage', compact('notes'));
+
     }
 
     public function update(string $id, Request $request): void

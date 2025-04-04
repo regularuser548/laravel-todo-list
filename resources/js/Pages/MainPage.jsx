@@ -66,6 +66,7 @@ export default function MainPage({ auth, notes }) {
 
                 <NewNoteForm createNote={createNote}></NewNoteForm>
 
+                {console.log(notesList)}
                 { notesList && notesList.map( (item) => (
                     <Note key={item.id} id={item.id}
                           title={item.title}
